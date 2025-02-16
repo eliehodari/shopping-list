@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <style>      
+li {
+    text-decoration: none;
+    margin-bottom: 4px;
+}
+
+.bought {
+    text-decoration: line-through;
+    color: gray;
+}
+
+button {
+    padding: 8px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+button:hover {
+    background-color:black;
+    color: white;
+}
+
+    </style>
+   
+</head>
+<body>
+    <h1>Shopping List</h1>
+    <p>Total Items: <span id="counter">0</span></p>
+    <input type="text" id="itemInput" placeholder="Enter an item">
+    <button onclick="addItem()">Add Item</button>
+    <ul id="shoppingList"></ul>
+
+    <script>
+        function addItem() {
+            const input = document.getElementById("itemInput");
+            const itemText = input.value.trim();
+            if (itemText === "") return;
+
+            const li = document.createElement("li");
+            li.innerHTML = `<span onclick="toggleBought(this)">${itemText}</span>
+                            <button onclick="removeItem(this)">Remove</button>`;
+            document.getElementById("shoppingList").appendChild(li);
+
+            input.value = "";
+            updateCounter();
+        }
+
+        function removeItem(button) {
+            button.parentElement.remove();
+            updateCounter();
+        }
+
+        function toggleBought(item) {
+            item.classList.toggle("bought");
+        }
+
+        function updateCounter() {
+            document.getElementById("counter").textContent = document.querySelectorAll("#shoppingList li").length;
+        }
+    </script>
+</body>
+</html>
